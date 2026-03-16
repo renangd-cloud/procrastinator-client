@@ -1,0 +1,128 @@
+{
+    "dashboard": {
+        "title": "Dashboard",
+        "week": "Week",
+        "month": "Month",
+        "addTask": "+ Add Task"
+    },
+    "common": {
+        "save": "Save",
+        "cancel": "Cancel",
+        "delete": "Delete",
+        "edit": "Edit",
+        "confirmDelete": "Are you sure you want to delete this item?"
+    },
+    "modals": {
+        "addTask": "Add Task",
+        "createNew": "+ Create New Task",
+        "selectExisting": "Or select an existing task",
+        "searchPlaceholder": "Search by title, description or tag...",
+        "noTasksFound": "No tasks found",
+        "typeToSearch": "Type at least 3 characters to search...",
+        "cancel": "Cancel",
+        "editTask": "Edit Task",
+        "newTask": "New Task",
+        "title": "Title",
+        "titlePlaceholder": "What needs to be done?",
+        "description": "Description",
+        "descriptionPlaceholder": "Add details...",
+        "recurrence": "Recurring",
+        "recurrenceType": "Recurrence Type",
+        "selectDays": "Select Days",
+        "status": "Status",
+        "date": "Date (Optional)",
+        "dueDate": "Due Date (Optional)",
+        "priority": "Priority",
+        "tags": "Tags",
+        "tagsPlaceholder": "Type and press Enter",
+        "subtasks": "Subtasks",
+        "subtasksPlaceholder": "Type and press Enter",
+        "dependencies": "Dependencies (Prerequisites)",
+        "dependenciesPlaceholder": "Search task...",
+        "delete": "Delete",
+        "save": "Save",
+        "confirmDelete": "Are you sure you want to delete this task?",
+        "duplicateTask": "Duplicate Task",
+        "newTaskName": "New Task Name",
+        "duplicate": "Duplicate",
+        "returnToBacklog": "Return to Backlog"
+    },
+    "status": {
+        "pending": "Pending",
+        "inProgress": "In Progress",
+        "completed": "Completed",
+        "finalized": "Finalized",
+        "cancelled": "Cancelled"
+    },
+    "days": {
+        "sun": "Sun",
+        "mon": "Mon",
+        "tue": "Tue",
+        "wed": "Wed",
+        "thu": "Thu",
+        "fri": "Fri",
+        "sat": "Sat"
+    },
+    "priority": {
+        "low": "Low",
+        "medium": "Medium",
+        "high": "High"
+    },
+    "recurrenceTypes": {
+        "daily": "Daily",
+        "weekly": "Weekly",
+        "biWeekly": "Bi-weekly",
+        "monthly": "Monthly"
+    },
+    "recurrenceNotes": {
+        "weekly": "This task will appear every day until completed once in the week.",
+        "biWeekly": "This task will appear if not completed in the current fortnight (days 1-15 or 16-end).",
+        "monthly": "This task will appear every day until completed once in the month."
+    },
+    "tasksByTags": {
+        "title": "Tasks",
+        "loading": "Loading tasks...",
+        "errorLoading": "Error loading tasks: ",
+        "recurringTasks": "Recurring Tasks",
+        "oneTimeTasks": "One-time Tasks",
+        "errorUpdatingStatus": "Error updating status: ",
+        "errorSaving": "Error saving task: ",
+        "errorDeleting": "Error deleting task: ",
+        "noTasksFound": "No tasks found.",
+        "noTasksCompleted": "No completed tasks.",
+        "viewAll": "All",
+        "viewTags": "Tags",
+        "viewPriority": "Priority",
+        "viewCompleted": "Completed",
+        "untagged": "Untagged",
+        "other": "Other",
+        "createTask": "Create New Task",
+        "noDate": "No Date",
+        "showInactive": "Show Inactive"
+    },
+    "userList": {
+        "title": "User Management",
+        "accessDenied": "Access Denied",
+        "accessDeniedMessage": "You need Admin privileges to view this page.",
+        "unauthorizedMessage": "Please log in again.",
+        "loadFailed": "Failed to load users. Please try again later.",
+        "name": "Name",
+        "email": "Email",
+        "role": "Role",
+        "joined": "Joined",
+        "userDetails": "User Details",
+        "close": "Close"
+    },
+    "shoppingList": {
+        "title": "Shopping List",
+        "addItem": "Add Item",
+        "editItem": "Edit Item",
+        "item": "Item",
+        "quantity": "Quantity",
+        "category": "Category",
+        "market": "Market",
+        "link": "Link (Optional)",
+        "viewProduct": "See product...",
+        "emptyState": "Your list is empty. Add an item to get started!"
+    }
+}

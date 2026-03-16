@@ -1,0 +1,129 @@
+{
+    "dashboard": {
+        "title": "Dashboard",
+        "week": "Semana",
+        "month": "Mês",
+        "addTask": "+ Adicionar Tarefa"
+    },
+    "common": {
+        "save": "Salvar",
+        "cancel": "Cancelar",
+        "delete": "Excluir",
+        "edit": "Editar",
+        "confirmDelete": "Tem certeza que deseja excluir este item?"
+    },
+    "modals": {
+        "addTask": "Adicionar Tarefa",
+        "createNew": "+ Criar Nova Tarefa",
+        "selectExisting": "Ou selecione uma tarefa existente",
+        "searchPlaceholder": "Buscar por título, descrição ou tag...",
+        "noTasksFound": "Nenhuma tarefa encontrada",
+        "typeToSearch": "Digite pelo menos 3 caracteres para buscar...",
+        "cancel": "Cancelar",
+        "editTask": "Editar Tarefa",
+        "newTask": "Nova Tarefa",
+        "title": "Título",
+        "titlePlaceholder": "O que precisa ser feito?",
+        "description": "Descrição",
+        "descriptionPlaceholder": "Adicione detalhes...",
+        "recurrence": "Recorrente",
+        "recurrenceType": "Tipo de Recorrência",
+        "selectDays": "Selecionar Dias",
+        "status": "Status",
+        "date": "Data (Opcional)",
+        "dueDate": "Data Limite (Opcional)",
+        "priority": "Prioridade",
+        "cancelled": "Cancelada",
+        "tags": "Tags",
+        "tagsPlaceholder": "Digite e pressione Enter",
+        "subtasks": "Subtarefas",
+        "subtasksPlaceholder": "Digite e pressione Enter",
+        "dependencies": "Dependências (Pré-requisitos)",
+        "dependenciesPlaceholder": "Buscar tarefa...",
+        "delete": "Excluir",
+        "save": "Salvar",
+        "confirmDelete": "Tem certeza que deseja excluir esta tarefa?",
+        "duplicateTask": "Duplicar Tarefa",
+        "newTaskName": "Nome da Nova Tarefa",
+        "duplicate": "Duplicar",
+        "returnToBacklog": "Devolver ao Backlog"
+    },
+    "status": {
+        "pending": "Pendente",
+        "inProgress": "Em Progresso",
+        "completed": "Concluída",
+        "finalized": "Finalizada",
+        "cancelled": "Cancelada"
+    },
+    "days": {
+        "sun": "Dom",
+        "mon": "Seg",
+        "tue": "Ter",
+        "wed": "Qua",
+        "thu": "Qui",
+        "fri": "Sex",
+        "sat": "Sáb"
+    },
+    "priority": {
+        "low": "Baixa",
+        "medium": "Média",
+        "high": "Alta"
+    },
+    "recurrenceTypes": {
+        "daily": "Diário",
+        "weekly": "Semanal",
+        "biWeekly": "Quinzenal",
+        "monthly": "Mensal"
+    },
+    "recurrenceNotes": {
+        "weekly": "Esta tarefa aparecerá todos os dias até ser concluída uma vez na semana.",
+        "biWeekly": "Esta tarefa aparecerá se não tiver sido concluída na quinzena atual (dias 1-15 ou 16-fim).",
+        "monthly": "Esta tarefa aparecerá todos os dias até ser concluída uma vez no mês."
+    },
+    "tasksByTags": {
+        "title": "Tarefas",
+        "loading": "Carregando tarefas...",
+        "errorLoading": "Erro ao carregar tarefas: ",
+        "recurringTasks": "Tarefas Recorrentes",
+        "oneTimeTasks": "Tarefas Pontuais",
+        "errorUpdatingStatus": "Erro ao atualizar status: ",
+        "errorSaving": "Erro ao salvar tarefa: ",
+        "errorDeleting": "Erro ao excluir tarefa: ",
+        "noTasksFound": "Nenhuma tarefa encontrada.",
+        "noTasksCompleted": "Nenhuma tarefa concluída.",
+        "viewAll": "Todas",
+        "viewTags": "Tags",
+        "viewPriority": "Prioridade",
+        "viewCompleted": "Concluídas",
+        "untagged": "Sem Tag",
+        "other": "Outros",
+        "createTask": "Criar Nova Tarefa",
+        "noDate": "Sem Data",
+        "showInactive": "Mostrar Inativas"
+    },
+    "userList": {
+        "title": "Gerenciamento de Usuários",
+        "accessDenied": "Acesso Negado",
+        "accessDeniedMessage": "Você precisa de privilégios de Administrador para visualizar esta página.",
+        "unauthorizedMessage": "Por favor, faça login novamente.",
+        "loadFailed": "Falha ao carregar usuários. Por favor, tente novamente mais tarde.",
+        "name": "Nome",
+        "email": "Email",
+        "role": "Função",
+        "joined": "Entrou em",
+        "userDetails": "Detalhes do Usuário",
+        "close": "Fechar"
+    },
+    "shoppingList": {
+        "title": "Lista de Compras",
+        "addItem": "Adicionar Item",
+        "editItem": "Editar Item",
+        "item": "Item",
+        "quantity": "Quantidade",
+        "category": "Categoria",
+        "market": "Mercado",
+        "link": "Link (Opcional)",
+        "viewProduct": "Ver produto...",
+        "emptyState": "Sua lista está vazia. Adicione um item para começar!"
+    }
+}

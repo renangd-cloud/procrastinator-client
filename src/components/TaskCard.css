@@ -1,0 +1,93 @@
+.task-card {
+    padding: 15px;
+    margin-bottom: 10px;
+    background-color: rgba(30, 41, 59, 0.9);
+    cursor: pointer;
+}
+
+.task-card:hover {
+    transform: scale(0.98);
+    background-color: rgba(51, 65, 85, 0.95) !important;
+    /* Lighter slate */
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+    /* Slightly reduced shadow for shrink effect */
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    z-index: 10;
+}
+
+.task-card.compact {
+    padding: 10px;
+}
+
+.task-title {
+    margin: 0 0 10px 0;
+    font-size: 1rem;
+}
+
+.task-card.compact .task-title {
+    margin: 0;
+    font-size: 0.9rem;
+}
+
+.task-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 5px;
+    margin-bottom: 10px;
+}
+
+.task-tag {
+    color: #fff;
+    padding: 2px 8px;
+    border-radius: 12px;
+    font-size: 0.8rem;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
+}
+
+.task-subtasks {
+    font-size: 0.8rem;
+    color: #94a3b8;
+}
+
+.task-card.inactive {
+    opacity: 0.8;
+    background-color: rgba(30, 41, 59, 0.6);
+    position: relative;
+    overflow: hidden;
+    padding-top: 32px !important;
+    /* Push content down for the strip - using !important to override .compact if needed, or ensuring specificity */
+}
+
+.task-card.inactive::after {
+    content: 'INATIVA';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 22px;
+    /* Fixed height */
+    background-color: #7f1d1d;
+    /* Darker red matching system palette */
+    border-bottom: 1px solid #450a0a;
+    color: #fecaca;
+    /* Lighter text for contrast on dark background */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-weight: bold;
+    font-size: 0.65rem;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    pointer-events: none;
+    z-index: 10;
+    border-radius: 16px 16px 0 0;
+}
+
+
+
+.task-card.inactive .task-title,
+.task-card.inactive .task-tags,
+.task-card.inactive .task-subtasks {
+    position: relative;
+    z-index: 1;
+}

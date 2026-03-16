@@ -1,0 +1,39 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
+  <defs>
+    <linearGradient id="grad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#6366f1;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#818cf8;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+  
+  <!-- Clock circle -->
+  <circle cx="50" cy="65" r="30" fill="none" stroke="url(#grad)" stroke-width="5"/>
+  
+  <!-- Clock hour markers (12, 3, 6, 9) -->
+  <circle cx="50" cy="38" r="2.5" fill="url(#grad)"/>
+  <circle cx="77" cy="65" r="2.5" fill="url(#grad)"/>
+  <circle cx="50" cy="92" r="2.5" fill="url(#grad)"/>
+  <circle cx="23" cy="65" r="2.5" fill="url(#grad)"/>
+  
+  <!-- Clock hands/pointers - clearly visible -->
+  <line x1="50" y1="65" x2="50" y2="45" stroke="#818cf8" stroke-width="4" stroke-linecap="round"/>
+  <line x1="50" y1="65" x2="67" y2="58" stroke="#6366f1" stroke-width="4" stroke-linecap="round"/>
+  
+  <!-- Stick figure sleeping SIDEWAYS on top of clock -->
+  <!-- Head (circle on the left side) -->
+  <circle cx="30" cy="25" r="7" fill="url(#grad)"/>
+  
+  <!-- Body (horizontal line/rectangle) -->
+  <line x1="37" y1="25" x2="63" y2="25" stroke="url(#grad)" stroke-width="6" stroke-linecap="round"/>
+  
+  <!-- Legs bent (sleeping position) -->
+  <line x1="55" y1="25" x2="58" y2="32" stroke="url(#grad)" stroke-width="4" stroke-linecap="round"/>
+  <line x1="58" y1="32" x2="62" y2="30" stroke="url(#grad)" stroke-width="4" stroke-linecap="round"/>
+  
+  <!-- Arm resting -->
+  <line x1="45" y1="25" x2="42" y2="32" stroke="url(#grad)" stroke-width="4" stroke-linecap="round"/>
+  
+  <!-- ZZZ sleep symbols -->
+  <text x="68" y="20" font-family="Arial, sans-serif" font-size="14" fill="#6366f1" font-weight="bold">Z</text>
+  <text x="75" y="15" font-family="Arial, sans-serif" font-size="11" fill="#818cf8" font-weight="bold">z</text>
+</svg>
