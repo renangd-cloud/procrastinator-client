@@ -12,6 +12,7 @@ const TaskModal = ({ task, onClose, onSave, onDelete }) => {
         title: '',
         description: '',
         date: '',
+        dueDate: '',
         tags: [],
         subtasks: [],
         dependencies: [],
@@ -44,6 +45,7 @@ const TaskModal = ({ task, onClose, onSave, onDelete }) => {
                 title: task.title || '',
                 description: task.description || '',
                 date: task.date ? task.date.split('T')[0] : '',
+                dueDate: task.dueDate ? task.dueDate.split('T')[0] : '',
                 tags: task.Tags ? task.Tags.map(t => ({ name: t.name, color: t.color || getRandomColor() })) : [],
                 subtasks: task.Subtasks || [],
                 dependencies: task.Prerequisites ? task.Prerequisites.map(p => p.id) : [],
@@ -215,6 +217,9 @@ const TaskModal = ({ task, onClose, onSave, onDelete }) => {
         const payload = { ...formData };
         if (!payload.date) {
             payload.date = null;
+        }
+        if (!payload.dueDate) {
+            payload.dueDate = null;
         }
         if (!payload.isRecurring || !payload.recurrenceType) {
             payload.recurrenceType = null;
