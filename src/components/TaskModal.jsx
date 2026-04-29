@@ -25,14 +25,18 @@ const TaskModal = ({ task, onClose, onSave, onDelete }) => {
     });
     const [newTag, setNewTag] = useState('');
     const [newSubtask, setNewSubtask] = useState('');
-    const [editingSubtaskIndex, setEditingSubtaskIndex] = useState(null); // [NEW] Track edited subtask
-    const { getTasks, getTags } = useApi(); // [NEW] Get getTags from hook
+    const [editingSubtaskIndex, setEditingSubtaskIndex] = useState(null);
+    const { getTasks, getTags, getTaskLogs, addTaskComment } = useApi();
     const [availableTasks, setAvailableTasks] = useState([]);
     const [availableTags, setAvailableTags] = useState([]); // [NEW] Stores all available tags
     const [showTagDropdown, setShowTagDropdown] = useState(false); // [NEW] Controls tag dropdown visibility
     const [dependencySearch, setDependencySearch] = useState('');
     const [showDependencyDropdown, setShowDependencyDropdown] = useState(false);
 
+    const [taskLogs, setTaskLogs] = useState([]);
+    const [newComment, setNewComment] = useState('');
+    const [showReasonModal, setShowReasonModal] = useState(false);
+    const [inactivationReason, setInactivationReason] = useState('');
     // Premium colors for tags
     const tagColors = [
         '#ef4444', '#f97316', '#f59e0b', '#10b981',
@@ -68,6 +72,14 @@ const TaskModal = ({ task, onClose, onSave, onDelete }) => {
         getTags().then(res => {
             setAvailableTags(res.data);
         }).catch(err => console.error(err));
+    }, [task]);
+
+    useEffect(() => {
+        if (task && task.id) {
+            getTaskLogs(task.id)
+                .then(res => setTaskLogs(res.data))
+                .catch(err => console.error(err));
+        }
     }, [task]);
 
     const getRandomColor = () => {
@@ -213,19 +225,42 @@ const TaskModal = ({ task, onClose, onSave, onDelete }) => {
     };
 
     const handleSubmit = (e) => {
-        e.preventDefault();
+        if (e) e.preventDefault();
+        
+        if (task && task.active !== false && !formData.active && !showReasonModal) {
+            setShowReasonModal(true);
+            return;
+        }
+
         const payload = { ...formData };
-        if (!payload.date) {
-            payload.date = null;
-        }
-        if (!payload.dueDate) {
-            payload.dueDate = null;
-        }
+        if (!payload.date) payload.date = null;
+        if (!payload.dueDate) payload.dueDate = null;
         if (!payload.isRecurring || !payload.recurrenceType) {
             payload.recurrenceType = null;
             payload.recurrenceDays = [];
         }
+        
+        if (showReasonModal) {
+            if (!inactivationReason.trim()) {
+                alert('Motivo é obrigatório para inativar a task.');
+                return;
+            }
+            payload.reason = inactivationReason;
+        }
+
         onSave(payload);
+        setShowReasonModal(false);
+        setInactivationReason('');
+    };
+
+    const handleAddComment = () => {
+        if (!newComment.trim()) return;
+        addTaskComment(task.id, newComment)
+            .then(res => {
+                setTaskLogs([res.data, ...taskLogs]);
+                setNewComment('');
+            })
+            .catch(err => alert(err.response?.data?.message || 'Erro ao adicionar comentário'));
     };
 
     // Custom Checkbox Component
@@ -243,20 +278,22 @@ const TaskModal = ({ task, onClose, onSave, onDelete }) => {
     return (
         <div className="modal-overlay" onClick={onClose}>
             <div className="glass-panel custom-scrollbar task-modal-content" onClick={(e) => e.stopPropagation()}>
-                <div className="modal-header">
-                    <h2 className="modal-title">
-                        {task && task.id ? t('modals.editTask') : t('modals.newTask')}
-                    </h2>
-                    {formData.isRecurring && (
-                        <div
-                            className="active-toggle"
-                            style={{ backgroundColor: formData.active ? '#10b981' : '#ef4444' }}
-                            onClick={() => setFormData(prev => ({ ...prev, active: !prev.active }))}
-                            title={formData.active ? "Clique para inativar" : "Clique para ativar"}
-                        >
-                            {formData.active ? "Ativa" : "Inativa"}
-                        </div>
-                    )}
+                <div className="modal-header" style={{ flexDirection: 'column', alignItems: 'flex-start' }}>
+                    <div style={{ display: 'flex', justifyContent: 'space-between', width: '100%', alignItems: 'center' }}>
+                        <h2 className="modal-title">
+                            {task && task.id ? t('modals.editTask') : t('modals.newTask')}
+                        </h2>
+                        {formData.isRecurring && (
+                            <div
+                                className="active-toggle"
+                                style={{ backgroundColor: formData.active ? '#10b981' : '#ef4444' }}
+                                onClick={() => setFormData(prev => ({ ...prev, active: !prev.active }))}
+                                title={formData.active ? "Clique para inativar" : "Clique para ativar"}
+                            >
+                                {formData.active ? "Ativa" : "Inativa"}
+                            </div>
+                        )}
+                    </div>
                 </div>
                 <form onSubmit={handleSubmit}>
                     <div className="form-group">
@@ -621,7 +658,78 @@ const TaskModal = ({ task, onClose, onSave, onDelete }) => {
                         </button>
                     </div>
                 </form>
+                {task && task.id && (
+                    <div className="history-section" style={{ marginTop: '30px', paddingTop: '20px', borderTop: '1px solid rgba(255,255,255,0.1)' }}>
+                        <h3 style={{ marginBottom: '20px', color: '#fff', fontSize: '1.2rem' }}>Histórico e Comentários</h3>
+                        <div className="add-comment-section" style={{ marginBottom: '20px' }}>
+                            <textarea 
+                                value={newComment} 
+                                onChange={(e) => setNewComment(e.target.value)} 
+                                placeholder="Adicionar um comentário..." 
+                                className="form-textarea"
+                                rows="2"
+                                style={{ width: '100%' }}
+                            ></textarea>
+                            <button type="button" onClick={handleAddComment} className="btn-save" style={{ marginTop: '10px' }}>
+                                Adicionar Comentário
+                            </button>
+                        </div>
+                        <div className="logs-list" style={{ display: 'flex', flexDirection: 'column', gap: '15px' }}>
+                            {taskLogs.map(log => (
+                                <div key={log.id} className="log-item" style={{ background: 'rgba(255,255,255,0.05)', padding: '15px', borderRadius: '8px', border: '1px solid rgba(255,255,255,0.1)' }}>
+                                    <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '10px', fontSize: '0.85rem', color: '#9ca3af' }}>
+                                        <div style={{ display: 'flex', gap: '10px', alignItems: 'center' }}>
+                                            <span style={{ 
+                                                background: log.actionType === 'INACTIVATION' ? '#ef444433' : log.actionType === 'UPDATE' ? '#f59e0b33' : log.actionType === 'CREATION' ? '#10b98133' : '#3b82f633',
+                                                color: log.actionType === 'INACTIVATION' ? '#ef4444' : log.actionType === 'UPDATE' ? '#f59e0b' : log.actionType === 'CREATION' ? '#10b981' : '#3b82f6',
+                                                padding: '2px 8px', borderRadius: '12px', fontWeight: 'bold'
+                                            }}>{log.actionType === 'COMMENT' ? 'COMENTÁRIO' : log.actionType === 'UPDATE' ? 'ATUALIZAÇÃO' : log.actionType === 'INACTIVATION' ? 'INATIVAÇÃO' : log.actionType === 'CREATION' ? 'CRIAÇÃO' : log.actionType}</span>
+                                            {log.User && log.User.name && <span style={{ color: '#cbd5e1' }}>{log.User.name}</span>}
+                                        </div>
+                                        <span>{new Date(log.createdAt).toLocaleString('pt-BR', { day: '2-digit', month: '2-digit', year: 'numeric', hour: '2-digit', minute: '2-digit' })}</span>
+                                    </div>
+                                    {log.comment && (
+                                        <div style={{ marginBottom: log.changes ? '10px' : '0', color: '#fff', fontSize: '0.95rem' }}>
+                                            {log.comment}
+                                        </div>
+                                    )}
+                                    {log.changes && (
+                                        <div style={{ fontSize: '0.85rem', color: '#cbd5e1', background: 'rgba(0,0,0,0.2)', padding: '10px', borderRadius: '6px' }}>
+                                            {Object.keys(log.changes).map(field => (
+                                                <div key={field} style={{ marginBottom: '4px' }}>
+                                                    <strong style={{ color: '#94a3b8' }}>{field}:</strong> {String(log.changes[field].old || 'N/A')} <span style={{ color: '#3b82f6' }}>➔</span> {String(log.changes[field].new || 'N/A')}
+                                                </div>
+                                            ))}
+                                        </div>
+                                    )}
+                                </div>
+                            ))}
+                            {taskLogs.length === 0 && <p style={{ color: '#9ca3af', textAlign: 'center', marginTop: '20px' }}>Nenhum histórico encontrado.</p>}
+                        </div>
+                    </div>
+                )}
             </div>
+
+            {showReasonModal && (
+                <div className="modal-overlay" style={{ zIndex: 9999 }}>
+                    <div className="glass-panel" style={{ padding: '30px', maxWidth: '400px', width: '100%' }}>
+                        <h3 style={{ marginTop: 0, marginBottom: '10px', color: '#fff' }}>Motivo da Inativação</h3>
+                        <p style={{ marginBottom: '20px', color: '#9ca3af', fontSize: '0.9rem' }}>Por favor, informe o motivo pelo qual você está inativando esta tarefa. Esta informação ficará salva no histórico.</p>
+                        <textarea
+                            value={inactivationReason}
+                            onChange={(e) => setInactivationReason(e.target.value)}
+                            className="form-textarea"
+                            rows="4"
+                            placeholder="Motivo (obrigatório)"
+                            required
+                        ></textarea>
+                        <div className="modal-actions" style={{ marginTop: '20px' }}>
+                            <button type="button" onClick={() => setShowReasonModal(false)} className="btn-cancel">Cancelar</button>
+                            <button type="button" onClick={handleSubmit} className="btn-save">Confirmar Inativação</button>
+                        </div>
+                    </div>
+                </div>
+            )}
         </div>
     );
 };

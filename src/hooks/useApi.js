@@ -12,6 +12,8 @@ const useApi = () => {
         updateTask: (id, data) => api.put(`/tasks/${id}`, data),
         deleteTask: (id) => api.delete(`/tasks/${id}`),
         duplicateTask: (id, newTitle) => api.post(`/tasks/${id}/duplicate`, { title: newTitle }),
+        getTaskLogs: (id) => api.get(`/tasks/${id}/logs`),
+        addTaskComment: (id, comment) => api.post(`/tasks/${id}/logs`, { comment }),
         getUsers: () => api.get('/users'),
         getUser: (id) => api.get(`/users/${id}`),
         updateUser: (id, data) => api.put(`/users/${id}`, data),

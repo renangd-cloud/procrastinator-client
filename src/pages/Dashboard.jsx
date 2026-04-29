@@ -194,7 +194,7 @@ const Dashboard = () => {
                 ))}
                 {days.map(d => {
                     const dateStr = format(d, 'yyyy-MM-dd');
-                    const dayTasks = tasks.filter(t => t.date && t.date.startsWith(dateStr));
+                    const dayTasks = tasks.filter(t => t.date && t.date.startsWith(dateStr) && t.active !== false);
                     const isCurrentMonth = d.getMonth() === now.getMonth();
 
                     return (
@@ -263,6 +263,7 @@ const Dashboard = () => {
                             const dateStr = format(day, 'yyyy-MM-dd');
                             // Helper to check if task should be shown on this date
                             const shouldShowTaskOnDate = (task, dateObj) => {
+                                if (task.active === false) return false;
                                 const dateStr = format(dateObj, 'yyyy-MM-dd');
 
                                 // 1. Direct date match (specific occurrence or non-recurring)
@@ -270,21 +271,6 @@ const Dashboard = () => {
 
                                 // 2. Recurring logic
                                 if (task.isRecurring) {
-                                    // [NEW] Inactivation Logic
-                                    if (task.active === false || task.inactivatedAt) {
-                                        // Determine effective inactivation date
-                                        // Use inactivatedAt if present, otherwise fallback to updateDate (when it was likely switched off)
-                                        const inactivationTimestamp = task.inactivatedAt || task.updateDate;
-
-                                        if (inactivationTimestamp) {
-                                            const inactivationDate = startOfDay(parseISO(inactivationTimestamp));
-                                            // If the view date is strictly AFTER the inactivation date, hide it.
-                                            // It remains visible ON the day of inactivation.
-                                            if (isAfter(dateObj, inactivationDate)) {
-                                                return false;
-                                            }
-                                        }
-                                    }
 
                                     // Logic to show recurring task on its scheduled days
                                     // Even if status is 'Completed' (which means it was completed TODAY), 
