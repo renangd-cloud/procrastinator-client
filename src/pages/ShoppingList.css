@@ -62,7 +62,7 @@
 /* Inline style in JSX overrides this for the main header, but keeping it as fallback/reference */
 .list-header {
     display: grid;
-    grid-template-columns: 2fr 1fr 1.5fr;
+    grid-template-columns: 2fr 1fr 1fr 1fr;
     padding: 1rem;
     border-radius: 12px;
     background: rgba(255, 255, 255, 0.05);
@@ -218,4 +218,12 @@
 
 .context-menu-item.delete:hover {
     background: rgba(239, 68, 68, 0.2);
+}
+
+.product-link {
+    color: #6366f1;
+    font-size: 0.85rem;
+    text-decoration: underline;
+    font-style: italic;
+    cursor: pointer;
 }

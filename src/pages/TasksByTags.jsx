@@ -208,16 +208,14 @@ const TasksByTags = () => {
     // Reusable Task Card Component
     const TaskCard = ({ task }) => {
         const isBlocked = task.Prerequisites && task.Prerequisites.some(p => p.status !== 'Finalized');
+        const priorityClass = task.priority ? task.priority.toLowerCase() : 'medium';
+        const statusClass = task.status === 'Completed' ? 'status-completed' : 'status-pending';
 
         return (
             <div
                 onClick={() => handleTaskClick(task)}
                 onContextMenu={(e) => handleContextMenu(e, task)}
-                className={`tbt-card ${!task.active ? 'inactive' : ''}`}
-                style={{
-                    borderLeft: `3px solid ${task.status === 'Completed' ? '#10b981' : '#9ca3af'}`,
-                    position: 'relative'
-                }}
+                className={`tbt-card ${!task.active ? 'inactive' : ''} ${statusClass}`}
             >
                 <div className="tbt-card-header">
                     <span className="tbt-card-status-icon">
@@ -235,14 +233,8 @@ const TasksByTags = () => {
                 )}
 
                 <div className="tbt-card-meta">
-                    <span style={{
-                        padding: '3px 8px',
-                        background: (task.priority === 'High' ? '#ef4444' : task.priority === 'Medium' ? '#f59e0b' : '#10b981') + '33',
-                        color: (task.priority === 'High' ? '#ef4444' : task.priority === 'Medium' ? '#f59e0b' : '#10b981'),
-                        borderRadius: '4px',
-                        fontWeight: 'bold'
-                    }}>
-                        {t(`priority.${task.priority.toLowerCase()}`) || task.priority}
+                    <span className={`priority-badge ${priorityClass}`}>
+                        {t(`priority.${priorityClass}`) || task.priority}
                     </span>
                     <span className="meta-badge-neutral">
                         {task.isRecurring ? (
@@ -297,15 +289,7 @@ const TasksByTags = () => {
                 {/* Blocked Icon */}
                 {isBlocked && (
                     <div
-                        style={{
-                            position: 'absolute',
-                            bottom: '10px',
-                            right: '10px',
-                            fontSize: '1.2rem',
-                            color: '#ef4444',
-                            filter: 'drop-shadow(0 2px 4px rgba(0,0,0,0.5))',
-                            zIndex: 10
-                        }}
+                        className="tbt-card-blocked-icon"
                         title={t('tasksByTags.blockedByDependencies')}
                     >
                         <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#ef4444" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -343,7 +327,7 @@ const TasksByTags = () => {
                     {t('tasksByTags.title')}
                 </h1>
 
-                <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+                <div className="tasks-header-controls">
 
                     {/* [NEW] Inactive Toggle */}
                     <div className="toggle-container">

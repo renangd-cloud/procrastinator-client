@@ -368,3 +368,52 @@
 .toggle-input:checked+.toggle-slider:before {
     transform: translateX(20px);
 }
+
+/* Priority Badges */
+.priority-badge {
+    padding: 3px 8px;
+    border-radius: 4px;
+    font-weight: bold;
+}
+
+.priority-badge.high {
+    background: rgba(239, 68, 68, 0.2);
+    color: #ef4444;
+}
+
+.priority-badge.medium {
+    background: rgba(245, 158, 11, 0.2);
+    color: #f59e0b;
+}
+
+.priority-badge.low {
+    background: rgba(16, 185, 129, 0.2);
+    color: #10b981;
+}
+
+/* Status Borders */
+.tbt-card.status-completed {
+    border-left: 3px solid #10b981;
+}
+
+.tbt-card.status-pending {
+    border-left: 3px solid #9ca3af;
+}
+
+/* Header Controls */
+.tasks-header-controls {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+/* Blocked Icon */
+.tbt-card-blocked-icon {
+    position: absolute;
+    bottom: 10px;
+    right: 10px;
+    font-size: 1.2rem;
+    color: #ef4444;
+    filter: drop-shadow(0 2px 4px rgba(0,0,0,0.5));
+    z-index: 10;
+}

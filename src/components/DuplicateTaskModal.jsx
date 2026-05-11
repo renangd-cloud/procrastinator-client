@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import './TaskModal.css'; // Reusing modal styles
+import Modal from './ui/Modal';
+import Button from './ui/Button';
 
 const DuplicateTaskModal = ({ task, onClose, onConfirm }) => {
     const { t } = useTranslation();
@@ -24,27 +25,14 @@ const DuplicateTaskModal = ({ task, onClose, onConfirm }) => {
     };
 
     return (
-        <div className="modal-overlay">
-            <div className="task-modal-content" style={{ maxWidth: '400px', height: 'auto', minHeight: 'auto', overflow: 'visible' }}>
-                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '20px' }}>
-                    <h2 className="modal-title" style={{ margin: 0, fontSize: '1.5rem' }}>{t('modals.duplicateTask')}</h2>
-                    <button
-                        onClick={onClose}
-                        style={{
-                            background: 'transparent',
-                            border: 'none',
-                            color: '#94a3b8',
-                            fontSize: '1.5rem',
-                            cursor: 'pointer',
-                            padding: '0 5px',
-                            lineHeight: 1
-                        }}
-                    >
-                        &times;
-                    </button>
-                </div>
-
-                <form onSubmit={handleSubmit}>
+        <Modal 
+            isOpen={true} 
+            onClose={onClose} 
+            title={t('modals.duplicateTask')}
+            className="task-modal-content"
+            style={{ maxWidth: '400px', height: 'auto', minHeight: 'auto', overflow: 'visible' }}
+        >
+            <form onSubmit={handleSubmit}>
                     <div className="form-group">
                         <label className="form-label">
                             {t('modals.newTaskName')}
@@ -71,21 +59,20 @@ const DuplicateTaskModal = ({ task, onClose, onConfirm }) => {
                         )}
                     </div>
 
-                    <div className="modal-actions">
-                        <button type="button" onClick={onClose} className="btn-cancel">
+                    <div className="modal-actions" style={{ display: 'flex', justifyContent: 'flex-end', gap: '12px', marginTop: '30px', paddingTop: '20px', borderTop: '1px solid rgba(255, 255, 255, 0.1)' }}>
+                        <Button variant="cancel" onClick={onClose}>
                             {t('modals.cancel')}
-                        </button>
-                        <button
+                        </Button>
+                        <Button
                             type="submit"
-                            className="btn-save"
+                            variant="primary"
                             disabled={!newTitle.trim() || isSubmitting}
                         >
                             {isSubmitting ? '...' : t('modals.duplicate')}
-                        </button>
+                        </Button>
                     </div>
                 </form>
-            </div>
-        </div>
+        </Modal>
     );
 };
 

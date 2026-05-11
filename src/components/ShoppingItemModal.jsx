@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import useApi from '../hooks/useApi';
 import './ShoppingItemModal.css';
+import Modal from './ui/Modal';
+import Button from './ui/Button';
 
 const ShoppingItemModal = ({ item, onClose, onSave, onDelete }) => {
     const { t } = useTranslation();
@@ -48,10 +50,13 @@ const ShoppingItemModal = ({ item, onClose, onSave, onDelete }) => {
     };
 
     return (
-        <div className="modal-overlay" onClick={onClose}>
-            <div className="shopping-modal-content glass-panel" onClick={(e) => e.stopPropagation()}>
-                <h2>{item ? t('shoppingList.editItem') : t('shoppingList.addItem')}</h2>
-                <form onSubmit={handleSubmit}>
+        <Modal 
+            isOpen={true} 
+            onClose={onClose} 
+            title={item ? t('shoppingList.editItem') : t('shoppingList.addItem')}
+            className="shopping-modal-content"
+        >
+            <form onSubmit={handleSubmit}>
                     <div className="form-group">
                         <label>{t('shoppingList.item')}</label>
                         <input
@@ -135,22 +140,21 @@ const ShoppingItemModal = ({ item, onClose, onSave, onDelete }) => {
                             placeholder="https://..."
                         />
                     </div>
-                    <div className="modal-actions">
+                    <div className="modal-actions" style={{ display: 'flex', justifyContent: 'flex-end', gap: '12px', marginTop: '20px', paddingTop: '15px', borderTop: '1px solid rgba(255,255,255,0.1)' }}>
                         {item && onDelete && (
-                            <button type="button" className="delete-button" onClick={() => onDelete(item.id)}>
+                            <Button variant="danger" onClick={() => onDelete(item.id)} style={{ marginRight: 'auto' }}>
                                 {t('common.delete')}
-                            </button>
+                            </Button>
                         )}
-                        <button type="button" onClick={onClose} className="cancel-button">
+                        <Button variant="cancel" onClick={onClose}>
                             {t('common.cancel')}
-                        </button>
-                        <button type="submit" className="save-button">
+                        </Button>
+                        <Button type="submit" variant="primary">
                             {t('common.save')}
-                        </button>
+                        </Button>
                     </div>
                 </form>
-            </div>
-        </div>
+        </Modal>
     );
 };
 

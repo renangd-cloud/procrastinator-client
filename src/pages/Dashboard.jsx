@@ -243,7 +243,7 @@ const Dashboard = () => {
                         >
                             {'<'}
                         </button>
-                        <span style={{ color: '#94a3b8', fontSize: '0.9rem', alignSelf: 'center' }}>
+                        <span className="week-nav-date">
                             {format(currentWeekStart, "d 'de' MMM", { locale: dateLocale })} - {format(addDays(currentWeekStart, 6), "d 'de' MMM", { locale: dateLocale })}
                         </span>
                         <button
@@ -410,11 +410,7 @@ const Dashboard = () => {
                                                         onClick={() => handleTaskClick(task)}
                                                         onContextMenu={(e) => handleContextMenu(e, task, day)}
                                                         compact={task.status === 'Completed'}
-                                                        className="recurring-task-card"
-                                                        style={{
-                                                            borderLeft: `3px solid ${task.status === 'Completed' ? '#10b981' : '#9ca3af'}`,
-                                                            backgroundColor: 'rgba(245, 158, 11, 0.1)'
-                                                        }}
+                                                        className={`recurring-task-card dashboard-task-recurring ${task.status === 'Completed' ? 'completed' : 'pending'}`}
                                                     />
                                                 ))}
 
@@ -431,12 +427,7 @@ const Dashboard = () => {
                                                         index={index}
                                                         onClick={() => handleTaskClick(task)}
                                                         onContextMenu={(e) => handleContextMenu(e, task, day)}
-                                                        compact={task.status === 'Completed'}
-                                                        style={task.status === 'Completed' ? {
-                                                            opacity: 0.7,
-                                                            backgroundColor: 'rgba(107, 114, 128, 0.2)',
-                                                            borderLeft: '3px solid #10b981'
-                                                        } : {}}
+                                                        className={`dashboard-task-regular ${task.status === 'Completed' ? 'completed' : ''}`}
                                                     />
                                                 ))}
                                                 {provided.placeholder}

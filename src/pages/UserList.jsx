@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import useApi from '../hooks/useApi';
 import { useTranslation } from 'react-i18next';
-
+import Modal from '../components/ui/Modal';
+import Button from '../components/ui/Button';
+import './UserList.css';
 
 const UserList = () => {
     const { t, i18n } = useTranslation();
@@ -26,43 +28,33 @@ const UserList = () => {
     }, [t]);
 
     return (
-        <div style={{ padding: '20px' }}>
-            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '20px' }}>
+        <div className="user-list-container">
+            <div className="user-list-header">
                 <h1>{t('userList.title')}</h1>
-
             </div>
 
             {error ? (
-                <div className="glass-panel" style={{
-                    padding: '40px',
-                    textAlign: 'center',
-                    background: 'rgba(239, 68, 68, 0.1)',
-                    border: '1px solid rgba(239, 68, 68, 0.3)'
-                }}>
-                    <div style={{ fontSize: '3rem', marginBottom: '20px' }}>🚫</div>
-                    <h2 style={{ color: '#fca5a5', marginBottom: '10px' }}>{t('userList.accessDenied')}</h2>
-                    <p style={{ color: '#cbd5e1', fontSize: '1.1rem' }}>{error}</p>
+                <div className="glass-panel error-panel">
+                    <div className="error-icon">🚫</div>
+                    <h2 className="error-title">{t('userList.accessDenied')}</h2>
+                    <p className="error-message">{error}</p>
                 </div>
             ) : (
-                <div className="glass-panel" style={{ padding: '20px', overflowX: 'auto' }}>
-                    <table style={{ width: '100%', borderCollapse: 'collapse', color: 'white' }}>
+                <div className="glass-panel table-container">
+                    <table className="user-table">
                         <thead>
-                            <tr style={{ borderBottom: '1px solid rgba(255,255,255,0.1)' }}>
-                                <th style={{ textAlign: 'left', padding: '10px' }}>{t('userList.name')}</th>
-                                <th style={{ textAlign: 'left', padding: '10px' }}>{t('userList.email')}</th>
-                                <th style={{ textAlign: 'left', padding: '10px' }}>{t('userList.role')}</th>
+                            <tr>
+                                <th>{t('userList.name')}</th>
+                                <th>{t('userList.email')}</th>
+                                <th>{t('userList.role')}</th>
                             </tr>
                         </thead>
                         <tbody>
                             {users.map(user => (
-                                <tr key={user.id} onClick={() => setSelectedUser(user)}
-                                    style={{ cursor: 'pointer', borderBottom: '1px solid rgba(255,255,255,0.05)', transition: 'background 0.2s' }}
-                                    onMouseEnter={(e) => e.currentTarget.style.background = 'rgba(255,255,255,0.05)'}
-                                    onMouseLeave={(e) => e.currentTarget.style.background = 'transparent'}
-                                >
-                                    <td style={{ padding: '10px' }}>{user.name}</td>
-                                    <td style={{ padding: '10px' }}>{user.email}</td>
-                                    <td style={{ padding: '10px' }}>{user.role}</td>
+                                <tr key={user.id} onClick={() => setSelectedUser(user)} className="user-row">
+                                    <td>{user.name}</td>
+                                    <td>{user.email}</td>
+                                    <td>{user.role}</td>
                                 </tr>
                             ))}
                         </tbody>
@@ -70,35 +62,36 @@ const UserList = () => {
                 </div>
             )}
 
-            {selectedUser && (
-                <div style={{
-                    position: 'fixed', top: 0, left: 0, right: 0, bottom: 0,
-                    backgroundColor: 'rgba(0,0,0,0.7)', display: 'flex', justifyContent: 'center', alignItems: 'center', zIndex: 1000
-                }} onClick={() => setSelectedUser(null)}>
-                    <div className="glass-panel" style={{ padding: '30px', width: '400px', backgroundColor: '#1e293b' }} onClick={e => e.stopPropagation()}>
-                        <h2 style={{ marginTop: 0 }}>{t('userList.userDetails')}</h2>
-                        <div style={{ marginBottom: '15px' }}>
-                            <label style={{ color: '#94a3b8', fontSize: '0.9rem' }}>{t('userList.name')}</label>
-                            <div style={{ fontSize: '1.1rem' }}>{selectedUser.name}</div>
+            <Modal 
+                isOpen={!!selectedUser} 
+                onClose={() => setSelectedUser(null)} 
+                title={t('userList.userDetails')}
+                style={{ width: '400px', padding: '30px', backgroundColor: '#1e293b' }}
+            >
+                {selectedUser && (
+                    <>
+                        <div className="user-details-group">
+                            <label className="user-details-label">{t('userList.name')}</label>
+                            <div className="user-details-value">{selectedUser.name}</div>
                         </div>
-                        <div style={{ marginBottom: '15px' }}>
-                            <label style={{ color: '#94a3b8', fontSize: '0.9rem' }}>{t('userList.email')}</label>
-                            <div style={{ fontSize: '1.1rem' }}>{selectedUser.email}</div>
+                        <div className="user-details-group">
+                            <label className="user-details-label">{t('userList.email')}</label>
+                            <div className="user-details-value">{selectedUser.email}</div>
                         </div>
-                        <div style={{ marginBottom: '15px' }}>
-                            <label style={{ color: '#94a3b8', fontSize: '0.9rem' }}>{t('userList.role')}</label>
-                            <div style={{ fontSize: '1.1rem' }}>{selectedUser.role}</div>
+                        <div className="user-details-group">
+                            <label className="user-details-label">{t('userList.role')}</label>
+                            <div className="user-details-value">{selectedUser.role}</div>
                         </div>
-                        <div style={{ marginBottom: '20px' }}>
-                            <label style={{ color: '#94a3b8', fontSize: '0.9rem' }}>{t('userList.joined')}</label>
-                            <div style={{ fontSize: '1.1rem' }}>{new Date(selectedUser.createDate).toLocaleDateString(i18n.language)}</div>
+                        <div className="user-details-group" style={{ marginBottom: '20px' }}>
+                            <label className="user-details-label">{t('userList.joined')}</label>
+                            <div className="user-details-value">{new Date(selectedUser.createDate).toLocaleDateString(i18n.language)}</div>
                         </div>
                         <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
-                            <button className="btn-primary" onClick={() => setSelectedUser(null)}>{t('userList.close')}</button>
+                            <Button variant="primary" onClick={() => setSelectedUser(null)}>{t('userList.close')}</Button>
                         </div>
-                    </div>
-                </div>
-            )}
+                    </>
+                )}
+            </Modal>
         </div>
     );
 };
