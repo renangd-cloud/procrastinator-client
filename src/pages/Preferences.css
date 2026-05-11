@@ -1,0 +1,62 @@
+.preferences-container {
+    padding: 20px;
+    color: white;
+}
+
+.preferences-title {
+    margin-bottom: 30px;
+}
+
+.preferences-panel {
+    padding: 20px;
+    max-width: 600px;
+}
+
+.preferences-section-title {
+    font-size: 1.2rem;
+    margin-bottom: 20px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    padding-bottom: 10px;
+}
+
+.preferences-group {
+    margin-bottom: 20px;
+}
+
+.preferences-label {
+    display: block;
+    margin-bottom: 10px;
+    font-size: 0.9rem;
+    color: #ccc;
+}
+
+.language-selector {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+.language-btn {
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    color: white;
+    padding: 10px 20px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.language-btn.active {
+    background: rgba(59, 130, 246, 0.5);
+}
+
+.language-btn:hover:not(.active) {
+    background: rgba(255, 255, 255, 0.15);
+}
+
+.preferences-actions {
+    display: flex;
+    justify-content: flex-end;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    padding-top: 20px;
+}

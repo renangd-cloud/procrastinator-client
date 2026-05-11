@@ -218,3 +218,27 @@
 .nav-button:hover {
     color: #60a5fa;
 }
+
+.week-nav-date {
+    color: #94a3b8;
+    font-size: 0.9rem;
+    align-self: center;
+}
+
+.dashboard-task-recurring {
+    background-color: rgba(245, 158, 11, 0.1);
+}
+
+.dashboard-task-recurring.completed {
+    border-left: 3px solid #10b981;
+}
+
+.dashboard-task-recurring.pending {
+    border-left: 3px solid #9ca3af;
+}
+
+.dashboard-task-regular.completed {
+    opacity: 0.7;
+    background-color: rgba(107, 114, 128, 0.2);
+    border-left: 3px solid #10b981;
+}

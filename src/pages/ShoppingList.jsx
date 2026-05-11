@@ -115,8 +115,8 @@ const ShoppingList = () => {
             </div>
 
             <div className="shopping-list">
-                {/* Header Row - Now without Market column */}
-                <div className="list-header glass-panel" style={{ gridTemplateColumns: '2fr 1fr 1fr 1fr' }}>
+                {/* Header Row */}
+                <div className="list-header glass-panel">
                     <div className="header-cell">{t('shoppingList.item')}</div>
                     <div className="header-cell">{t('shoppingList.quantity')}</div>
                     <div className="header-cell">{t('shoppingList.category')}</div>
@@ -171,8 +171,7 @@ const ShoppingList = () => {
                                                     className="item-tag category-tag"
                                                     style={{
                                                         backgroundColor: stringToColor(item.category),
-                                                        color: '#ffffff',
-                                                        border: 'none'
+                                                        color: '#ffffff'
                                                     }}
                                                 >
                                                     {item.category}
@@ -185,13 +184,7 @@ const ShoppingList = () => {
                                                     href={item.link}
                                                     target="_blank"
                                                     rel="noopener noreferrer"
-                                                    style={{
-                                                        color: '#6366f1',
-                                                        fontSize: '0.85rem',
-                                                        textDecoration: 'underline',
-                                                        fontStyle: 'italic',
-                                                        cursor: 'pointer'
-                                                    }}
+                                                    className="product-link"
                                                     onClick={(e) => e.stopPropagation()}
                                                 >
                                                     {t('shoppingList.viewProduct')}
