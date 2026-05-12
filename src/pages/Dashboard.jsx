@@ -8,12 +8,15 @@ import TaskCard from '../components/TaskCard';
 import TaskModal from '../components/TaskModal';
 import TaskSelectionModal from '../components/TaskSelectionModal';
 import TaskContextMenu from '../components/TaskContextMenu';
+import ReminderBanner from '../components/ReminderBanner';
 import './Dashboard.css';
 
 
 const Dashboard = () => {
     const { t, i18n } = useTranslation();
     const [tasks, setTasks] = useState([]);
+    const [reminders, setReminders] = useState([]);
+    const [dismissedReminderIds, setDismissedReminderIds] = useState([]);
     const [currentWeekStart, setCurrentWeekStart] = useState(startOfWeek(new Date(), { weekStartsOn: 0 }));
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [selectedTask, setSelectedTask] = useState(null);
@@ -22,7 +25,7 @@ const Dashboard = () => {
 
     const [selectedDate, setSelectedDate] = useState(null);
     const [contextMenu, setContextMenu] = useState({ show: false, x: 0, y: 0, task: null, date: null });
-    const { getTasks, createTask, updateTask, deleteTask } = useApi();
+    const { getTasks, createTask, updateTask, deleteTask, getReminders } = useApi();
 
     const dateLocale = i18n.language === 'pt' ? ptBR : enUS;
 
@@ -89,8 +92,22 @@ const Dashboard = () => {
         }
     };
 
+    const fetchReminders = async () => {
+        try {
+            const res = await getReminders();
+            setReminders(res.data);
+        } catch (err) {
+            console.error('Error fetching reminders:', err);
+        }
+    };
+
+    const handleDismissReminder = (taskId) => {
+        setDismissedReminderIds(prev => [...prev, taskId]);
+    };
+
     useEffect(() => {
         fetchTasks();
+        fetchReminders();
     }, []);
 
     const onDragEnd = async (result) => {
@@ -255,6 +272,12 @@ const Dashboard = () => {
                     </div>
                 )}
             </div>
+
+            <ReminderBanner
+                reminders={reminders}
+                dismissedIds={dismissedReminderIds}
+                onDismiss={handleDismissReminder}
+            />
 
             {viewMode === 'week' ? (
                 <DragDropContext onDragEnd={onDragEnd}>

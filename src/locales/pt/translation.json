@@ -125,5 +125,10 @@
         "link": "Link (Opcional)",
         "viewProduct": "Ver produto...",
         "emptyState": "Sua lista está vazia. Adicione um item para começar!"
+    },
+    "reminders": {
+        "dueIn": "Vence em {{hours}}h — {{date}}",
+        "overdue": "Venceu em {{date}}",
+        "dismiss": "Ocultar lembrete"
     }
 }
