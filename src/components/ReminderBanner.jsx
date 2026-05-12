@@ -15,9 +15,12 @@ const ReminderBanner = ({ reminders, dismissedIds, onDismiss }) => {
     return (
         <div className="reminder-banner-container">
             {visibleReminders.map(task => {
-                const dueDate = parseISO(task.dueDate);
+                if (!task.dueDate) return null;
+
+                const dueDate = typeof task.dueDate === 'string' ? parseISO(task.dueDate) : task.dueDate;
                 const hoursLeft = differenceInHours(dueDate, new Date());
                 const isOverdue = hoursLeft < 0;
+                const formattedDate = format(dueDate, "dd/MM 'às' HH:mm", { locale: dateLocale });
 
                 return (
                     <div
@@ -31,8 +34,8 @@ const ReminderBanner = ({ reminders, dismissedIds, onDismiss }) => {
                             <strong className="reminder-banner-title">{task.title}</strong>
                             <span className="reminder-banner-time">
                                 {isOverdue
-                                    ? t('reminders.overdue', { date: format(dueDate, "dd/MM 'às' HH:mm", { locale: dateLocale }) })
-                                    : t('reminders.dueIn', { hours: hoursLeft, date: format(dueDate, "dd/MM 'às' HH:mm", { locale: dateLocale }) })
+                                    ? t('reminders.overdue', { date: formattedDate })
+                                    : t('reminders.dueIn', { hours: hoursLeft, date: formattedDate })
                                 }
                             </span>
                         </div>

@@ -52,12 +52,11 @@ const Dashboard = () => {
             await updateTask(contextMenu.task.id, {
                 ...contextMenu.task,
                 status: newStatus,
-                // For recurring input:
                 lastCompletedDate: newStatus === 'Completed' && contextMenu.date ? contextMenu.date : null,
-                // For regular task move-to-date (optional, but consistent with recurrence click behavior):
                 date: contextMenu.date ? contextMenu.date : contextMenu.task.date
             });
             fetchTasks();
+            fetchReminders();
         } catch (err) {
             alert('Error updating status: ' + (err.response?.data?.message || err.message));
         }
@@ -68,6 +67,7 @@ const Dashboard = () => {
         try {
             await updateTask(contextMenu.task.id, { ...contextMenu.task, date: null });
             fetchTasks();
+            fetchReminders();
         } catch (err) {
             alert('Error returning task to backlog: ' + (err.response?.data?.message || err.message));
         }
@@ -167,6 +167,7 @@ const Dashboard = () => {
             }
             setIsModalOpen(false);
             fetchTasks();
+            fetchReminders();
         } catch (err) {
             console.error(err);
             alert('Erro ao salvar tarefa: ' + (err.response?.data?.message || err.message));
@@ -179,6 +180,7 @@ const Dashboard = () => {
                 await deleteTask(id);
                 setIsModalOpen(false);
                 fetchTasks();
+                fetchReminders();
             } catch (err) {
                 console.error(err);
             }
