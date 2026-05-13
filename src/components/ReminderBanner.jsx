@@ -1,6 +1,6 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import { format, parseISO, differenceInHours } from 'date-fns';
+import { format, differenceInHours, parse, endOfDay } from 'date-fns';
 import { ptBR, enUS } from 'date-fns/locale';
 import './ReminderBanner.css';
 
@@ -17,10 +17,17 @@ const ReminderBanner = ({ reminders, dismissedIds, onDismiss }) => {
             {visibleReminders.map(task => {
                 if (!task.dueDate) return null;
 
-                const dueDate = typeof task.dueDate === 'string' ? parseISO(task.dueDate) : task.dueDate;
+                // Extract only the YYYY-MM-DD part to avoid UTC offset shifting the date
+                // e.g. "2026-05-13T00:00:00.000Z" parsed as UTC becomes "12/05 20:00" in UTC-4
+                // By parsing as a local date and treating it as end-of-day, we respect the user's timezone
+                const dateStr = typeof task.dueDate === 'string'
+                    ? task.dueDate.substring(0, 10)
+                    : format(task.dueDate, 'yyyy-MM-dd');
+                const dueDate = endOfDay(parse(dateStr, 'yyyy-MM-dd', new Date()));
+
                 const hoursLeft = differenceInHours(dueDate, new Date());
                 const isOverdue = hoursLeft < 0;
-                const formattedDate = format(dueDate, "dd/MM 'às' HH:mm", { locale: dateLocale });
+                const formattedDate = format(dueDate, "dd/MM", { locale: dateLocale });
 
                 return (
                     <div
