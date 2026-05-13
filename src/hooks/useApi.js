@@ -8,6 +8,7 @@ const useApi = () => {
 
     return {
         getTasks: (params) => api.get('/tasks', { params }),
+        getReminders: () => api.get('/tasks/reminders'),
         createTask: (data) => api.post('/tasks', data),
         updateTask: (id, data) => api.put(`/tasks/${id}`, data),
         deleteTask: (id) => api.delete(`/tasks/${id}`),

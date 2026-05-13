@@ -124,5 +124,10 @@
         "link": "Link (Optional)",
         "viewProduct": "See product...",
         "emptyState": "Your list is empty. Add an item to get started!"
+    },
+    "reminders": {
+        "dueIn": "Due in {{hours}}h — {{date}}",
+        "overdue": "Overdue since {{date}}",
+        "dismiss": "Dismiss reminder"
     }
 }
